@@ -202,6 +202,14 @@ function customEntryToMeta(entry: CustomFunctionEntry): AlgorithmMeta {
 
   const lineMap = buildCustomLineMap(entry.csharpCode, parsed.name);
 
+  // Re-derive inputSchema from params at runtime — never trust the stored schema,
+  // which may carry stale min/max values from an older parser version.
+  const inputSchema = parsed.params.map(p => ({
+    name: p.name,
+    type: (p.type === 'int' || p.type === 'long' ? 'int' : 'double') as 'int' | 'double',
+    defaultValue: 1,
+  }));
+
   return {
     id: entry.id,
     displayName: entry.displayName,
@@ -212,7 +220,7 @@ function customEntryToMeta(entry: CustomFunctionEntry): AlgorithmMeta {
     csharpLineMap: lineMap,
     description: `Your custom recursive function: ${entry.displayName}`,
     defaultInput: buildDefaultInput(parsed),
-    inputSchema: parsed.inputSchema,
+    inputSchema,
     traceFunction: (input: Record<string, unknown>) => {
       const result = generateCustomTrace(parsed, input);
       if (result.ok) return result.trace;
