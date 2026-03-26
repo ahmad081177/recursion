@@ -111,13 +111,12 @@ export function parseCSharpFunction(code: string): ParseResult {
     };
   }
 
-  // Build input schema
+  // Build input schema — no min/max for custom functions; the trace engine's
+  // MAX_STEPS/MAX_DEPTH guards are the safety net for runaway inputs.
   const inputSchema: InputParam[] = params.map(p => ({
     name: p.name,
     type: p.type === 'int' || p.type === 'long' ? 'int' as const : 'double' as const,
-    min: 0,
-    max: 20,
-    defaultValue: 4,
+    defaultValue: 1,
   }));
 
   const signature = `${returnType} ${fnName}(${params.map(p => `${p.type} ${p.name}`).join(', ')})`;
