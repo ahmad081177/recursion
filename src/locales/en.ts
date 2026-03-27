@@ -82,7 +82,7 @@ export const en = {
   // RecursionTreePanel
   'tree.title': 'Recursion Tree',
 
-  // AlgorithmInsight
+  // AlgorithmInsight — formula panel (formula is math notation, desc/cmplx are text)
   'insight.title': 'Algorithm Insight',
   'insight.show': 'Show ▼',
   'insight.hide': 'Hide ▲',
@@ -91,6 +91,40 @@ export const en = {
   'insight.detected': 'detected!',
   'insight.memo': 'memoization',
   'insight.memoSuffix': ', each value is computed only once!',
+  'insight.fibCalled': 'F({n}) called {c}×',
+
+  // Algorithm formulas / descriptions / complexities
+  'alg.factorial.formula': 'n! = n × (n−1) × … × 1',
+  'alg.factorial.desc': 'Each call multiplies n by the factorial of (n−1).',
+  'alg.factorial.cmplx': 'O(n) calls, O(n) stack depth',
+
+  'alg.power.formula': 'baseᵉˣᵖ = base × base^(exp−1)',
+  'alg.power.desc': 'Reduce the exponent by 1 each time, multiply on the way back.',
+  'alg.power.cmplx': 'O(exp) calls, O(exp) stack depth',
+
+  'alg.fibonacci.formula': 'F(n) = F(n−1) + F(n−2)',
+  'alg.fibonacci.desc': 'Each call branches into TWO sub-calls, creating a tree.',
+  'alg.fibonacci.cmplx': 'O(2ⁿ) calls without memoization!',
+
+  'alg.sumArray.formula': 'Sum(i) = arr[i] + Sum(i+1)',
+  'alg.sumArray.desc': 'Add each element to the sum of the remaining elements.',
+  'alg.sumArray.cmplx': 'O(n) calls, O(n) stack depth',
+
+  'alg.maxItem.formula': 'Max(i) = max(arr[i], Max(i+1))',
+  'alg.maxItem.desc': 'Compare each element against the maximum of the rest.',
+  'alg.maxItem.cmplx': 'O(n) calls, O(n) stack depth',
+
+  'alg.bubbleSort.formula': 'Compare adjacent → swap if out of order → repeat',
+  'alg.bubbleSort.desc': 'The largest unsorted element "bubbles up" to the right end each pass.',
+  'alg.bubbleSort.cmplx': 'O(n²) comparisons, O(n²) swaps worst case',
+
+  'alg.selectionSort.formula': 'Find minimum in unsorted → place at correct position',
+  'alg.selectionSort.desc': 'Each pass selects the smallest remaining element.',
+  'alg.selectionSort.cmplx': 'O(n²) comparisons, O(n) swaps',
+
+  'alg.insertionSort.formula': 'Pick next element → insert into sorted portion',
+  'alg.insertionSort.desc': 'Build the sorted array one element at a time.',
+  'alg.insertionSort.cmplx': 'O(n²) worst, O(n) best (nearly sorted)',
 
   // CodePanel
   'code.title': 'C# Code',

@@ -84,7 +84,7 @@ export const ar: Record<TranslationKey, string> = {
   // RecursionTreePanel
   'tree.title': 'شجرة التكرار',
 
-  // AlgorithmInsight
+  // AlgorithmInsight — formula panel
   'insight.title': 'تحليل الخوارزمية',
   'insight.show': 'عرض ▼',
   'insight.hide': 'إخفاء ▲',
@@ -93,6 +93,40 @@ export const ar: Record<TranslationKey, string> = {
   'insight.detected': 'تم اكتشافه!',
   'insight.memo': 'الحفظ المؤقت',
   'insight.memoSuffix': '، كل قيمة تُحسب مرة واحدة فقط!',
+  'insight.fibCalled': 'F({n}) استُدعي {c}×',
+
+  // Algorithm formulas / descriptions / complexities
+  'alg.factorial.formula': 'n! = n × (n−1) × … × 1',
+  'alg.factorial.desc': 'كل استدعاء يضرب n في مضروب (n−1).',
+  'alg.factorial.cmplx': 'O(n) استدعاء، O(n) عمق مكدس',
+
+  'alg.power.formula': 'baseᵉˣᵖ = base × base^(exp−1)',
+  'alg.power.desc': 'تخفيض الأس بمقدار 1 في كل مرة، وضرب الأساس في طريق العودة.',
+  'alg.power.cmplx': 'O(exp) استدعاء، O(exp) عمق مكدس',
+
+  'alg.fibonacci.formula': 'F(n) = F(n−1) + F(n−2)',
+  'alg.fibonacci.desc': 'كل استدعاء يتفرع إلى استدعاءين فرعيين، مُنشئاً شجرة.',
+  'alg.fibonacci.cmplx': 'O(2ⁿ) استدعاء بدون حفظ مؤقت!',
+
+  'alg.sumArray.formula': 'Sum(i) = arr[i] + Sum(i+1)',
+  'alg.sumArray.desc': 'إضافة كل عنصر إلى مجموع العناصر المتبقية.',
+  'alg.sumArray.cmplx': 'O(n) استدعاء، O(n) عمق مكدس',
+
+  'alg.maxItem.formula': 'Max(i) = max(arr[i], Max(i+1))',
+  'alg.maxItem.desc': 'مقارنة كل عنصر بالحد الأقصى للعناصر المتبقية.',
+  'alg.maxItem.cmplx': 'O(n) استدعاء، O(n) عمق مكدس',
+
+  'alg.bubbleSort.formula': 'قارن متجاورين ← بادل إذا كانا خارج الترتيب ← كرر',
+  'alg.bubbleSort.desc': 'أكبر عنصر غير مرتّب يتفقاع للطرف الأيمن في كل تمريرة.',
+  'alg.bubbleSort.cmplx': 'O(n²) مقارنة، O(n²) تبادل في أسوأ حالة',
+
+  'alg.selectionSort.formula': 'ابحث عن الأدنى في غير المرتّب ← ضعه في موضعه الصحيح',
+  'alg.selectionSort.desc': 'كل تمريرة تختار أصغر عنصر متبقٍّ.',
+  'alg.selectionSort.cmplx': 'O(n²) مقارنة، O(n) تبادل',
+
+  'alg.insertionSort.formula': 'خذ العنصر التالي ← أدرجه في الجزء المرتّب',
+  'alg.insertionSort.desc': 'بناء المصفوفة المرتّبة عنصراً بعنصر.',
+  'alg.insertionSort.cmplx': 'O(n²) أسوأ حالة، O(n) أفضل حالة (شبه مرتّب)',
 
   // CodePanel
   'code.title': 'كود C#',

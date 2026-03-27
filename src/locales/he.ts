@@ -84,7 +84,7 @@ export const he: Record<TranslationKey, string> = {
   // RecursionTreePanel
   'tree.title': 'עץ רקורסיה',
 
-  // AlgorithmInsight
+  // AlgorithmInsight — formula panel
   'insight.title': 'תובנת אלגוריתם',
   'insight.show': 'הצג ▼',
   'insight.hide': 'הסתר ▲',
@@ -93,6 +93,40 @@ export const he: Record<TranslationKey, string> = {
   'insight.detected': 'זוהו!',
   'insight.memo': 'שינון',
   'insight.memoSuffix': ', כל ערך מחושב פעם אחת בלבד!',
+  'insight.fibCalled': 'F({n}) נקרא {c}×',
+
+  // Algorithm formulas / descriptions / complexities
+  'alg.factorial.formula': 'n! = n × (n−1) × … × 1',
+  'alg.factorial.desc': 'כל קריאה מכפילה n בעצרת של (n−1).',
+  'alg.factorial.cmplx': 'O(n) קריאות, O(n) עומק מחסנית',
+
+  'alg.power.formula': 'baseᵉˣᵖ = base × base^(exp−1)',
+  'alg.power.desc': 'מפחיתים את המעריך ב-1 בכל פעם, מכפילים בדרך חזרה.',
+  'alg.power.cmplx': 'O(exp) קריאות, O(exp) עומק מחסנית',
+
+  'alg.fibonacci.formula': 'F(n) = F(n−1) + F(n−2)',
+  'alg.fibonacci.desc': 'כל קריאה מתפצלת לשתי קריאות משנה, ויוצרת עץ.',
+  'alg.fibonacci.cmplx': 'O(2ⁿ) קריאות ללא שינון!',
+
+  'alg.sumArray.formula': 'Sum(i) = arr[i] + Sum(i+1)',
+  'alg.sumArray.desc': 'מוסיפים כל איבר לסכום האיברים הנותרים.',
+  'alg.sumArray.cmplx': 'O(n) קריאות, O(n) עומק מחסנית',
+
+  'alg.maxItem.formula': 'Max(i) = max(arr[i], Max(i+1))',
+  'alg.maxItem.desc': 'משווים כל איבר למקסימום של השאר.',
+  'alg.maxItem.cmplx': 'O(n) קריאות, O(n) עומק מחסנית',
+
+  'alg.bubbleSort.formula': 'השווה סמוכים ← החלף אם לא בסדר ← חזור',
+  'alg.bubbleSort.desc': 'הערך הגדול ביותר שלא ממוין "מבעבע" לקצה הימני בכל מעבר.',
+  'alg.bubbleSort.cmplx': 'O(n²) השוואות, O(n²) החלפות במקרה הגרוע',
+
+  'alg.selectionSort.formula': 'מצא מינימום בלתי-ממוין ← מקם במיקום הנכון',
+  'alg.selectionSort.desc': 'כל מעבר בוחר את האיבר הקטן ביותר הנותר.',
+  'alg.selectionSort.cmplx': 'O(n²) השוואות, O(n) החלפות',
+
+  'alg.insertionSort.formula': 'קח את האיבר הבא ← הכנס לחלק הממוין',
+  'alg.insertionSort.desc': 'בנה את המערך הממוין איבר אחד בכל פעם.',
+  'alg.insertionSort.cmplx': 'O(n²) מקרה גרוע, O(n) מקרה טוב (כמעט ממוין)',
 
   // CodePanel
   'code.title': 'קוד C#',

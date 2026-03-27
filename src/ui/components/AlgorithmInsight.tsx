@@ -4,49 +4,21 @@ import { useVisualization } from '../../store/VisualizationContext';
 import type { TraceStep, CallStep, ReturnStep, BaseCaseStep } from '../../engine/types';
 import { useLang } from '../../store/LangContext';
 
-// ── Formula definitions ──────────────────────────────────────
+// ── Formula key lookup ───────────────────────────────────────
 
-const formulas: Record<string, { formula: string; description: string; complexity: string }> = {
-  factorial: {
-    formula: 'n! = n × (n−1) × … × 1',
-    description: 'Each call multiplies n by the factorial of (n−1).',
-    complexity: 'O(n) calls, O(n) stack depth',
-  },
-  power: {
-    formula: 'base^exp = base × base^(exp−1)',
-    description: 'Reduce the exponent by 1 each time, multiply on the way back.',
-    complexity: 'O(exp) calls, O(exp) stack depth',
-  },
-  fibonacci: {
-    formula: 'F(n) = F(n−1) + F(n−2)',
-    description: 'Each call branches into TWO sub-calls, creating a tree.',
-    complexity: 'O(2ⁿ) calls without memoization!',
-  },
-  sumArray: {
-    formula: 'Sum(i) = arr[i] + Sum(i+1)',
-    description: 'Add each element to the sum of the remaining elements.',
-    complexity: 'O(n) calls, O(n) stack depth',
-  },
-  maxItem: {
-    formula: 'Max(i) = max(arr[i], Max(i+1))',
-    description: 'Compare each element against the maximum of the rest.',
-    complexity: 'O(n) calls, O(n) stack depth',
-  },
-  bubbleSort: {
-    formula: 'Compare adjacent → swap if out of order → repeat',
-    description: 'The largest unsorted element "bubbles up" to the right end each pass.',
-    complexity: 'O(n²) comparisons, O(n²) swaps worst case',
-  },
-  selectionSort: {
-    formula: 'Find minimum in unsorted → place at correct position',
-    description: 'Each pass selects the smallest remaining element.',
-    complexity: 'O(n²) comparisons, O(n) swaps',
-  },
-  insertionSort: {
-    formula: 'Pick next element → insert into sorted portion',
-    description: 'Build the sorted array one element at a time.',
-    complexity: 'O(n²) worst, O(n) best (nearly sorted)',
-  },
+import type { TranslationKey } from '../../locales/en';
+
+type FormulaKeys = { formula: TranslationKey; desc: TranslationKey; cmplx: TranslationKey };
+
+const formulaKeys: Record<string, FormulaKeys> = {
+  factorial:     { formula: 'alg.factorial.formula',    desc: 'alg.factorial.desc',    cmplx: 'alg.factorial.cmplx' },
+  power:         { formula: 'alg.power.formula',        desc: 'alg.power.desc',        cmplx: 'alg.power.cmplx' },
+  fibonacci:     { formula: 'alg.fibonacci.formula',    desc: 'alg.fibonacci.desc',    cmplx: 'alg.fibonacci.cmplx' },
+  sumArray:      { formula: 'alg.sumArray.formula',     desc: 'alg.sumArray.desc',     cmplx: 'alg.sumArray.cmplx' },
+  maxItem:       { formula: 'alg.maxItem.formula',      desc: 'alg.maxItem.desc',      cmplx: 'alg.maxItem.cmplx' },
+  bubbleSort:    { formula: 'alg.bubbleSort.formula',   desc: 'alg.bubbleSort.desc',   cmplx: 'alg.bubbleSort.cmplx' },
+  selectionSort: { formula: 'alg.selectionSort.formula', desc: 'alg.selectionSort.desc', cmplx: 'alg.selectionSort.cmplx' },
+  insertionSort: { formula: 'alg.insertionSort.formula', desc: 'alg.insertionSort.desc', cmplx: 'alg.insertionSort.cmplx' },
 };
 
 // ── Computation chain builders ────────────────────────────────
@@ -154,9 +126,9 @@ export function AlgorithmInsight() {
   const { t } = useLang();
   const [collapsed, setCollapsed] = useState(false);
   const algId = state.algorithm.id;
-  const info = formulas[algId];
+  const keys = formulaKeys[algId];
 
-  if (!info) return null;
+  if (!keys) return null;
 
   const isRecursion = state.algorithm.category === 'recursion';
 
@@ -215,14 +187,14 @@ export function AlgorithmInsight() {
         <div className="flex-1 min-w-0 space-y-2">
           {/* Formula */}
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="font-mono text-sm font-bold text-blue-400">{info.formula}</span>
+            <span className="font-mono text-sm font-bold text-blue-400">{t(keys.formula)}</span>
             <span className="text-[11px] px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-400 border border-purple-500/25 font-mono">
-              {info.complexity}
+              {t(keys.cmplx)}
             </span>
           </div>
 
           {/* Description */}
-          <p className="text-xs text-secondary leading-relaxed">{info.description}</p>
+          <p className="text-xs text-secondary leading-relaxed">{t(keys.desc)}</p>
 
           {/* Computation chain for factorial/power */}
           <AnimatePresence mode="wait">
@@ -261,7 +233,7 @@ export function AlgorithmInsight() {
                     <strong>{totalDuplicateCalls} {totalDuplicateCalls > 1 ? t('insight.redundantPlural') : t('insight.redundant')}</strong> {t('insight.detected')}{' '}
                     {Array.from(fibData.duplicates.entries())
                       .slice(0, 3)
-                      .map(([n, c]) => `F(${n}) called ${c}×`)
+                      .map(([n, c]) => t('insight.fibCalled', { n, c }))
                       .join(', ')}
                     {fibData.duplicates.size > 3 ? '…' : ''}.
                     With <span className="text-yellow-400 font-semibold">{t('insight.memo')}</span>{t('insight.memoSuffix')}
