@@ -27,11 +27,17 @@ function getSortedRegion(trace: TraceStep[], stepIndex: number): Set<number> {
   const n = arr.length;
   const pass = (step as CompareStep | SwapStep).pass ?? 0;
 
+  // Last step in trace — the sort is fully complete, all elements are sorted
+  if (stepIndex === trace.length - 1) {
+    for (let k = 0; k < n; k++) sorted.add(k);
+    return sorted;
+  }
+
   if (alg === 'BubbleSort') {
-    // After pass i, the last i elements are sorted
+    // During pass i, the last i elements are already confirmed sorted
     for (let k = n - pass; k < n; k++) sorted.add(k);
   } else if (alg === 'SelectionSort') {
-    // After pass i, the first i elements are sorted
+    // During pass i, the first i elements are already confirmed sorted
     for (let k = 0; k < pass; k++) sorted.add(k);
   } else if (alg === 'InsertionSort') {
     // The leftmost (pass+1) elements are sorted among themselves
