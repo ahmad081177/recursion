@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useVisualization } from '../../store/VisualizationContext';
 import type { CompareStep, SwapStep, TraceStep } from '../../engine/types';
+import { useLang } from '../../store/LangContext';
+import type { TFn } from '../../engine/narration';
 
 const EMOJIS = {
   default: '🙂',
@@ -39,7 +41,7 @@ function getSortedRegion(trace: TraceStep[], stepIndex: number): Set<number> {
 }
 
 /** Get comparison result info for the current step */
-function getComparisonResult(trace: TraceStep[], stepIndex: number): { text: string; color: string } | null {
+function getComparisonResult(trace: TraceStep[], stepIndex: number, t: TFn): { text: string; color: string } | null {
   const step = trace[stepIndex];
   if (!step) return null;
 
@@ -47,16 +49,15 @@ function getComparisonResult(trace: TraceStep[], stepIndex: number): { text: str
     const cs = step as CompareStep;
     const [i, j] = cs.indices;
     const a = cs.array[i], b = cs.array[j];
-    // Check if next step is a swap with same callId
     const next = trace[stepIndex + 1];
     const willSwap = next?.type === 'SWAP' && next.callId === cs.callId;
     if (willSwap) {
-      return { text: `${a} > ${b} → Swap! 🔄`, color: '#F5874F' };
+      return { text: t('array.cmp.swap', { a, b }), color: '#F5874F' };
     }
-    return { text: `${a} ≤ ${b} → OK ✓`, color: '#42D96C' };
+    return { text: t('array.cmp.ok', { a, b }), color: '#42D96C' };
   }
   if (step.type === 'SWAP') {
-    return { text: `Swapped! → [${(step as SwapStep).array.join(', ')}]`, color: '#F5874F' };
+    return { text: t('array.cmp.swapped', { array: (step as SwapStep).array.join(', ') }), color: '#F5874F' };
   }
   return null;
 }
@@ -102,8 +103,9 @@ function buildArrayState(trace: TraceStep[], stepIndex: number): TileState[] {
 
 export function ArrayVisualizer() {
   const { state } = useVisualization();
+  const { t } = useLang();
   const tiles = buildArrayState(state.trace, state.stepIndex);
-  const compResult = getComparisonResult(state.trace, state.stepIndex);
+  const compResult = getComparisonResult(state.trace, state.stepIndex, t);
 
   // Pass info
   const currentStep = state.trace[state.stepIndex];
@@ -118,7 +120,7 @@ export function ArrayVisualizer() {
   if (tiles.length === 0) {
     return (
       <div className="flex items-center justify-center h-32 text-secondary text-sm italic">
-        Array will appear here
+        {t('array.empty')}
       </div>
     );
   }
@@ -184,7 +186,7 @@ export function ArrayVisualizer() {
             animate={{ opacity: 1, scale: 1 }}
             className="text-xs font-bold px-3 py-1 rounded-full bg-blue-500/15 text-blue-400 border border-blue-500/30"
           >
-            Pass {pass + 1} of {totalPasses}
+            {t('array.pass', { n: pass + 1, total: totalPasses })}
           </motion.span>
         )}
         {compResult && (
@@ -207,22 +209,22 @@ export function ArrayVisualizer() {
       {/* Stats + Legend */}
       <div className="flex items-center justify-between flex-wrap gap-3 text-xs text-secondary">
         <div className="flex gap-4">
-          <span>Comparisons: <strong className="text-primary font-mono">{countStepType(state.trace, state.stepIndex, 'COMPARE')}</strong></span>
-          <span>Swaps: <strong className="text-primary font-mono">{countStepType(state.trace, state.stepIndex, 'SWAP')}</strong></span>
+          <span>{t('array.comparisons')} <strong className="text-primary font-mono">{countStepType(state.trace, state.stepIndex, 'COMPARE')}</strong></span>
+          <span>{t('array.swaps')} <strong className="text-primary font-mono">{countStepType(state.trace, state.stepIndex, 'SWAP')}</strong></span>
         </div>
         <div className="flex items-center gap-3 text-[11px]">
-          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-[#F5C842]/30 border border-[#F5C842]/50" /> Comparing</span>
-          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-[#F5874F]/30 border border-[#F5874F]/50" /> Swapping</span>
-          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-[#42D96C]/20 border border-[#42D96C]/50" /> Sorted</span>
+          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-[#F5C842]/30 border border-[#F5C842]/50" /> {t('array.legend.comparing')}</span>
+          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-[#F5874F]/30 border border-[#F5874F]/50" /> {t('array.legend.swapping')}</span>
+          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-[#42D96C]/20 border border-[#42D96C]/50" /> {t('array.legend.sorted')}</span>
         </div>
       </div>
 
       {/* Algorithm hint */}
       {algName && (
         <div className="text-xs text-secondary/60 text-center italic">
-          {algName === 'BubbleSort' && '🫧 Larger values "bubble" to the right end after each pass'}
-          {algName === 'SelectionSort' && '🎯 Each pass finds the minimum and places it at the correct position'}
-          {algName === 'InsertionSort' && '🃏 Like sorting a hand of cards — pick a card and slide it into the right spot'}
+          {algName === 'BubbleSort' && t('array.hint.bubble')}
+          {algName === 'SelectionSort' && t('array.hint.selection')}
+          {algName === 'InsertionSort' && t('array.hint.insertion')}
         </div>
       )}
     </div>

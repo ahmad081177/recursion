@@ -126,6 +126,32 @@ export const en = {
   'alg.insertionSort.desc': 'Build the sorted array one element at a time.',
   'alg.insertionSort.cmplx': 'O(n²) worst, O(n) best (nearly sorted)',
 
+  // Algorithm card descriptions (home screen)
+  'alg.factorial.cardDesc': 'Classic linear recursion. Computes n × (n-1) × ... × 1.',
+  'alg.power.cardDesc': 'Raises base to the power of exp using recursion.',
+  'alg.fibonacci.cardDesc': 'Computes the nth Fibonacci number using branching recursion — two recursive calls!',
+  'alg.sumArray.cardDesc': 'Sums all elements of an integer array recursively.',
+  'alg.maxItem.cardDesc': 'Finds the maximum element in an integer array using recursion.',
+  'alg.bubbleSort.cardDesc': 'Repeatedly compares adjacent elements and swaps them if out of order.',
+  'alg.selectionSort.cardDesc': 'Finds the minimum element repeatedly and places it at the front.',
+  'alg.insertionSort.cardDesc': 'Builds the sorted array one element at a time by inserting each element in its correct position.',
+  'alg.custom.cardDesc': 'Your custom recursive function: {name}',
+
+  // ArrayVisualizer
+  'array.empty': 'Array will appear here',
+  'array.pass': 'Pass {n} of {total}',
+  'array.comparisons': 'Comparisons:',
+  'array.swaps': 'Swaps:',
+  'array.legend.comparing': 'Comparing',
+  'array.legend.swapping': 'Swapping',
+  'array.legend.sorted': 'Sorted',
+  'array.hint.bubble': '🫧 Larger values "bubble" to the right end after each pass',
+  'array.hint.selection': '🎯 Each pass finds the minimum and places it at the correct position',
+  'array.hint.insertion': '🃏 Like sorting a hand of cards — pick a card and slide it into the right spot',
+  'array.cmp.swap': '{a} > {b} → Swap! 🔄',
+  'array.cmp.ok': '{a} ≤ {b} → OK ✓',
+  'array.cmp.swapped': 'Swapped! → [{array}]',
+
   // CodePanel
   'code.title': 'C# Code',
   'code.show': '▾ Show',

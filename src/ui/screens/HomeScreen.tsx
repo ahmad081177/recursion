@@ -8,6 +8,18 @@ import type { CustomFunctionEntry } from '../../store/AppContext';
 import { AddFunctionDialog } from '../components/AddFunctionDialog';
 import { useLang } from '../../store/LangContext';
 import type { Lang } from '../../store/LangContext';
+import type { TranslationKey } from '../../locales/en';
+
+const ALG_CARD_DESC_KEYS: Partial<Record<string, TranslationKey>> = {
+  factorial:     'alg.factorial.cardDesc',
+  power:         'alg.power.cardDesc',
+  fibonacci:     'alg.fibonacci.cardDesc',
+  sumArray:      'alg.sumArray.cardDesc',
+  maxItem:       'alg.maxItem.cardDesc',
+  bubbleSort:    'alg.bubbleSort.cardDesc',
+  selectionSort: 'alg.selectionSort.cardDesc',
+  insertionSort: 'alg.insertionSort.cardDesc',
+};
 
 const difficultyConfig = {
   easy:   { gradient: 'from-green-500/20 to-green-600/5', text: '#34d399', border: '#34d399', icon: '🟢' },
@@ -391,7 +403,7 @@ export function HomeScreen() {
                     <p className="font-mono text-xs mb-3 truncate" style={{ color: scene.accent, opacity: 0.7 }}>{alg.csharpSignature}</p>
 
                     {/* Description */}
-                    <p className="text-sm leading-relaxed line-clamp-2 mb-5" style={{ color: 'var(--app-secondary)' }}>{alg.description}</p>
+                    <p className="text-sm leading-relaxed line-clamp-2 mb-5" style={{ color: 'var(--app-secondary)' }}>{t(ALG_CARD_DESC_KEYS[alg.id] ?? 'alg.custom.cardDesc', { name: alg.displayName })}</p>
 
                     {/* Bottom row */}
                     <div className="flex items-center justify-between pt-4" style={{ borderTop: '1px solid var(--app-border)' }}>

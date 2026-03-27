@@ -128,6 +128,32 @@ export const he: Record<TranslationKey, string> = {
   'alg.insertionSort.desc': 'בנה את המערך הממוין איבר אחד בכל פעם.',
   'alg.insertionSort.cmplx': 'O(n²) מקרה גרוע, O(n) מקרה טוב (כמעט ממוין)',
 
+  // Algorithm card descriptions (home screen)
+  'alg.factorial.cardDesc': 'רקורסיה לינארית קלאסית. מחשב n × (n-1) × ... × 1.',
+  'alg.power.cardDesc': 'מחשב בסיס בחזקת המעריך באמצעות רקורסיה.',
+  'alg.fibonacci.cardDesc': 'מחשב את המספר ה-n בסדרת פיבונאצ\'י עם רקורסיה מסתעפת — שתי קריאות רקורסיביות!',
+  'alg.sumArray.cardDesc': 'מסכם את כל איברי מערך שלמים באופן רקורסיבי.',
+  'alg.maxItem.cardDesc': 'מוצא את האיבר הגדול ביותר במערך שלמים באמצעות רקורסיה.',
+  'alg.bubbleSort.cardDesc': 'משווה איברים סמוכים שוב ושוב ומחליף אותם אם הם לא בסדר.',
+  'alg.selectionSort.cardDesc': 'מוצא את האיבר המינימלי שוב ושוב ומציב אותו בחזית.',
+  'alg.insertionSort.cardDesc': 'בונה את המערך הממוין איבר אחד בכל פעם על ידי הכנסת כל איבר למיקומו הנכון.',
+  'alg.custom.cardDesc': 'הפונקציה הרקורסיבית המותאמת שלך: {name}',
+
+  // ArrayVisualizer
+  'array.empty': 'המערך יופיע כאן',
+  'array.pass': 'מעבר {n} מתוך {total}',
+  'array.comparisons': 'השוואות:',
+  'array.swaps': 'החלפות:',
+  'array.legend.comparing': 'משווה',
+  'array.legend.swapping': 'מחליף',
+  'array.legend.sorted': 'ממוין',
+  'array.hint.bubble': '🫧 ערכים גדולים יותר "מבעבעים" לקצה הימני לאחר כל מעבר',
+  'array.hint.selection': '🎯 כל מעבר מוצא את המינימום ומציב אותו במיקום הנכון',
+  'array.hint.insertion': '🃏 כמו מיון קלפים — קח קלף והכנס אותו למקום הנכון',
+  'array.cmp.swap': '{a} > {b} → החלף! 🔄',
+  'array.cmp.ok': '{a} ≤ {b} → בסדר ✓',
+  'array.cmp.swapped': 'הוחלפו! → [{array}]',
+
   // CodePanel
   'code.title': 'קוד C#',
   'code.show': '▾ הצג',

@@ -128,6 +128,32 @@ export const ar: Record<TranslationKey, string> = {
   'alg.insertionSort.desc': 'بناء المصفوفة المرتّبة عنصراً بعنصر.',
   'alg.insertionSort.cmplx': 'O(n²) أسوأ حالة، O(n) أفضل حالة (شبه مرتّب)',
 
+  // Algorithm card descriptions (home screen)
+  'alg.factorial.cardDesc': 'تكرار خطي كلاسيكي. يحسب n × (n-1) × ... × 1.',
+  'alg.power.cardDesc': 'يرفع الأساس إلى قوة الأس باستخدام التكرار.',
+  'alg.fibonacci.cardDesc': 'يحسب العدد الفيبوناتشي رقم n باستخدام تكرار متفرع — استدعاءان تكراريان!',
+  'alg.sumArray.cardDesc': 'يجمع جميع عناصر مصفوفة أعداد صحيحة بشكل تكراري.',
+  'alg.maxItem.cardDesc': 'يجد العنصر الأقصى في مصفوفة أعداد صحيحة باستخدام التكرار.',
+  'alg.bubbleSort.cardDesc': 'يقارن العناصر المتجاورة باستمرار ويبادلها إذا كانت خارج الترتيب.',
+  'alg.selectionSort.cardDesc': 'يجد العنصر الأدنى بشكل متكرر ويضعه في المقدمة.',
+  'alg.insertionSort.cardDesc': 'يبني المصفوفة المرتّبة عنصراً بعنصر بإدراج كل عنصر في موضعه الصحيح.',
+  'alg.custom.cardDesc': 'دالتك التكرارية المخصصة: {name}',
+
+  // ArrayVisualizer
+  'array.empty': 'ستظهر المصفوفة هنا',
+  'array.pass': 'تمريرة {n} من {total}',
+  'array.comparisons': 'المقارنات:',
+  'array.swaps': 'التبادلات:',
+  'array.legend.comparing': 'جارٍ المقارنة',
+  'array.legend.swapping': 'جارٍ التبادل',
+  'array.legend.sorted': 'مرتّب',
+  'array.hint.bubble': '🫧 القيم الأكبر تتفقاع نحو الطرف الأيمن بعد كل تمريرة',
+  'array.hint.selection': '🎯 كل تمريرة تجد الحد الأدنى وتضعه في موضعه الصحيح',
+  'array.hint.insertion': '🃏 مثل ترتيب ورق اللعب — اختر ورقة وأدرجها في المكان المناسب',
+  'array.cmp.swap': '{a} > {b} → تبادل! 🔄',
+  'array.cmp.ok': '{a} ≤ {b} → بالترتيب ✓',
+  'array.cmp.swapped': 'تم التبادل! → [{array}]',
+
   // CodePanel
   'code.title': 'كود C#',
   'code.show': '▾ عرض',
