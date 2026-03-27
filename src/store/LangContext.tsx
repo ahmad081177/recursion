@@ -22,7 +22,7 @@ function loadLang(): Lang {
 interface LangContextValue {
   lang: Lang;
   setLang: (lang: Lang) => void;
-  t: (key: TranslationKey, vars?: Record<string, string | number>) => string;
+  t: (key: TranslationKey, vars?: Record<string, unknown>) => string;
   isRTL: boolean;
 }
 
@@ -45,7 +45,7 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const t = useCallback(
-    (key: TranslationKey, vars?: Record<string, string | number>): string => {
+    (key: TranslationKey, vars?: Record<string, unknown>): string => {
       const str = translations[lang][key] ?? en[key];
       if (!vars) return str;
       return Object.entries(vars).reduce<string>(

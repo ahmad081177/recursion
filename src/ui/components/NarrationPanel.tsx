@@ -12,8 +12,8 @@ export function NarrationPanel() {
 
   if (!currentStep) return null;
 
-  const narration = generateNarration(currentStep);
-  const expanded_text = generateExpandedNarration(currentStep);
+  const narration = generateNarration(currentStep, t);
+  const expanded_text = generateExpandedNarration(currentStep, t);
 
   const stepTypeColors: Record<string, string> = {
     CALL: 'text-blue-400',
