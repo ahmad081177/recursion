@@ -80,9 +80,9 @@ function VisualizationContent() {
                   onClick={() => setLang(opt.value)}
                   className="h-8 px-2.5 rounded-lg text-xs font-semibold transition-all"
                   style={{
-                    backgroundColor: lang === opt.value ? '#7c3aed' : 'var(--elevated, #1e1e2e)',
-                    color: lang === opt.value ? '#fff' : 'var(--secondary)',
-                    border: `1px solid ${lang === opt.value ? '#7c3aed' : 'rgba(255,255,255,0.08)'}`,
+                    backgroundColor: lang === opt.value ? 'var(--app-accent)' : 'var(--app-surface)',
+                    color: lang === opt.value ? '#fff' : 'var(--app-secondary)',
+                    border: `1px solid ${lang === opt.value ? 'var(--app-accent)' : 'var(--app-border)'}`,
                   }}
                   aria-pressed={lang === opt.value}
                 >
