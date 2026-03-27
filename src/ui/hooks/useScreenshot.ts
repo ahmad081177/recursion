@@ -1,22 +1,25 @@
 import { useRef, useState, useCallback } from 'react';
 import { toBlob } from 'html-to-image';
+import { useApp } from '../../store/AppContext';
 
 interface UseScreenshotOptions {
   filename: string;
   backgroundColor?: string;
 }
 
-export function useScreenshot({ filename, backgroundColor = '#1a1b26' }: UseScreenshotOptions) {
+export function useScreenshot({ filename, backgroundColor }: UseScreenshotOptions) {
   const targetRef = useRef<HTMLDivElement>(null);
   const [isCapturing, setIsCapturing] = useState(false);
   const [justCaptured, setJustCaptured] = useState(false);
+  const { theme } = useApp();
 
   const capture = useCallback(async () => {
     if (!targetRef.current || isCapturing) return;
     setIsCapturing(true);
+    const bg = backgroundColor ?? (theme === 'dark' ? '#111113' : '#fafaf9');
     try {
       const blob = await toBlob(targetRef.current, {
-        backgroundColor,
+        backgroundColor: bg,
         cacheBust: true,
         pixelRatio: 2,
       });
@@ -35,7 +38,7 @@ export function useScreenshot({ filename, backgroundColor = '#1a1b26' }: UseScre
     } finally {
       setIsCapturing(false);
     }
-  }, [filename, backgroundColor, isCapturing]);
+  }, [filename, backgroundColor, isCapturing, theme]);
 
   return { targetRef, capture, isCapturing, justCaptured };
 }
