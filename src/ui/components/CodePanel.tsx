@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useVisualization } from '../../store/VisualizationContext';
+import { useLang } from '../../store/LangContext';
 
 const CS_KEYWORDS = new Set([
   'int', 'void', 'if', 'else', 'for', 'while', 'return', 'new',
@@ -34,6 +35,7 @@ const kindClass: Record<string, string> = {
 
 export function CodePanel() {
   const { state } = useVisualization();
+  const { t } = useLang();
   const [collapsed, setCollapsed] = useState(false);
 
   const { csharpCode, csharpLineMap } = state.algorithm;
@@ -52,8 +54,8 @@ export function CodePanel() {
         className="w-full flex items-center justify-between px-5 py-3 text-sm font-semibold text-secondary hover:text-primary transition-colors"
         aria-expanded={!collapsed}
       >
-        <span className="flex items-center gap-2">📝 <span>C# Code</span></span>
-        <span className="text-xs">{collapsed ? '▾ Show' : '▴ Hide'}</span>
+        <span className="flex items-center gap-2">📝 <span>{t('code.title')}</span></span>
+        <span className="text-xs">{collapsed ? t('code.show') : t('code.hide')}</span>
       </button>
 
       {/* Body */}
@@ -67,7 +69,7 @@ export function CodePanel() {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <pre className="px-4 pb-4 pt-1 text-sm leading-7 font-mono overflow-x-auto bg-[#0d0d14] text-slate-200 rounded-b-2xl">
+            <pre className="px-4 pb-4 pt-1 text-sm leading-7 font-mono overflow-x-auto bg-[#0d0d14] text-slate-200 rounded-b-2xl" dir="ltr">
               {lines.map((line, i) => {
                 const active = activeLines.has(i);
                 return (

@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useVisualization } from '../../store/VisualizationContext';
+import { useLang } from '../../store/LangContext';
 
 interface QuizPanelProps {
   onExit: () => void;
@@ -7,6 +8,7 @@ interface QuizPanelProps {
 
 export function QuizPanel({ onExit }: QuizPanelProps) {
   const { state, dispatch } = useVisualization();
+  const { t } = useLang();
   const { quizState, trace, stepIndex } = state;
 
   if (!quizState) return null;
@@ -32,7 +34,7 @@ export function QuizPanel({ onExit }: QuizPanelProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <span className="text-xl">🎯</span>
-          <span className="text-sm font-bold text-primary">Quiz Mode — What happens next?</span>
+          <span className="text-sm font-bold text-primary">{t('quiz.header')}</span>
         </div>
         <div className="flex items-center gap-4">
           {combo >= 3 && (
@@ -44,8 +46,8 @@ export function QuizPanel({ onExit }: QuizPanelProps) {
               🔥 ×{combo}
             </motion.span>
           )}
-          <span className="text-xs font-bold text-purple-400">XP: {xp}</span>
-          <button onClick={onExit} className="text-xs text-secondary hover:text-blue-400 font-medium transition-colors px-2 py-1 rounded-lg hover:bg-blue-500/10">Exit Quiz</button>
+              <span className="text-xs font-bold text-purple-400">{t('quiz.xp')} {xp}</span>
+          <button onClick={onExit} className="text-xs text-secondary hover:text-blue-400 font-medium transition-colors px-2 py-1 rounded-lg hover:bg-blue-500/10">{t('quiz.exit')}</button>
         </div>
       </div>
 
@@ -99,18 +101,18 @@ export function QuizPanel({ onExit }: QuizPanelProps) {
           >
             {options[selectedIndex ?? 0]?.isCorrect ? (
               <div className="text-sm text-green-400 font-semibold">
-                ✓ Correct! {combo >= 5 ? '🔥 COMBO!' : '+10 XP'}
+                ✓ {t('quiz.correct')} {combo >= 5 ? t('quiz.comboBig') : t('quiz.xpGain')}
               </div>
             ) : (
               <div className="text-sm text-red-400">
-                ✗ Not quite — {options.find(o => o.isCorrect)?.explanation}
+                ✗ {t('quiz.wrong')} {options.find(o => o.isCorrect)?.explanation}
               </div>
             )}
             <button
               onClick={handleNext}
               className="mt-2 px-4 py-1.5 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-500 transition-colors"
             >
-              Next Step →
+              {t('quiz.next')}
             </button>
           </motion.div>
         )}

@@ -6,12 +6,20 @@ import type { AlgorithmMeta, InputParam } from '../../engine/types';
 import { useApp } from '../../store/AppContext';
 import type { CustomFunctionEntry } from '../../store/AppContext';
 import { AddFunctionDialog } from '../components/AddFunctionDialog';
+import { useLang } from '../../store/LangContext';
+import type { Lang } from '../../store/LangContext';
 
 const difficultyConfig = {
-  easy:   { gradient: 'from-green-500/20 to-green-600/5', text: '#34d399', border: '#34d399', icon: '🟢', label: 'Easy' },
-  medium: { gradient: 'from-yellow-500/20 to-yellow-600/5', text: '#fbbf24', border: '#fbbf24', icon: '🟡', label: 'Medium' },
-  hard:   { gradient: 'from-red-500/20 to-red-600/5', text: '#f87171', border: '#f87171', icon: '🔴', label: 'Hard' },
+  easy:   { gradient: 'from-green-500/20 to-green-600/5', text: '#34d399', border: '#34d399', icon: '🟢' },
+  medium: { gradient: 'from-yellow-500/20 to-yellow-600/5', text: '#fbbf24', border: '#fbbf24', icon: '🟡' },
+  hard:   { gradient: 'from-red-500/20 to-red-600/5', text: '#f87171', border: '#f87171', icon: '🔴' },
 };
+
+const LANG_OPTIONS: { value: Lang; label: string }[] = [
+  { value: 'en', label: 'EN' },
+  { value: 'ar', label: 'عر' },
+  { value: 'he', label: 'עב' },
+];
 
 const algorithmIcons: Record<string, string> = {
   factorial: '🔢', power: '⚡', fibonacci: '🐚', sumArray: '➕', maxItem: '👑',
@@ -101,6 +109,7 @@ function useTypingAnimation(texts: string[], speed = 60, pause = 2000) {
 export function HomeScreen() {
   const navigate = useNavigate();
   const { theme, toggleTheme, customFunctions, removeCustomFunction, exportFunctions, importFunctions } = useApp();
+  const { lang, setLang, t } = useLang();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [importMsg, setImportMsg] = useState<string | null>(null);
   const [selected, setSelected] = useState<AlgorithmMeta | null>(null);
@@ -185,6 +194,26 @@ export function HomeScreen() {
         {theme === 'dark' ? '☀️' : '🌙'}
       </motion.button>
 
+      {/* ── Language toggle (top-right, beside theme) ── */}
+      <div className="absolute top-6 z-50 flex gap-1" style={{ right: '4rem' }}>
+        {LANG_OPTIONS.map(opt => (
+          <button
+            key={opt.value}
+            onClick={() => setLang(opt.value)}
+            className="h-10 px-3 rounded-xl text-sm font-semibold transition-all"
+            style={{
+              backgroundColor: lang === opt.value ? 'var(--app-accent, #7c5dfa)' : 'var(--app-surface)',
+              color: lang === opt.value ? '#fff' : 'var(--app-secondary)',
+              border: `1px solid ${lang === opt.value ? 'var(--app-accent, #7c5dfa)' : 'var(--app-border)'}`,
+              boxShadow: 'var(--app-card-shadow)',
+            }}
+            aria-pressed={lang === opt.value}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
+
       {/* ── Hero section ── */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -206,7 +235,7 @@ export function HomeScreen() {
               <span style={{ color: 'var(--app-accent, #7c5dfa)' }}>Recursi</span><span style={{ color: 'var(--app-accent-light, #a78bfa)' }}>Quest</span>
             </h1>
             <p className="text-sm mt-0.5" style={{ color: 'var(--app-secondary)' }}>
-              See the algorithm. <span className="font-medium" style={{ color: 'var(--app-text)' }}>Understand it.</span>
+              {t('home.subtitle')} <span className="font-medium" style={{ color: 'var(--app-text)' }}>{t('home.subtitleBold')}</span>
             </p>
           </div>
         </div>
@@ -232,7 +261,7 @@ export function HomeScreen() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
         className="flex mb-10 relative z-10 w-full max-w-5xl"
-        style={{ borderBottom: '2px solid var(--app-border)' }}
+        style={{ borderBottom: '2px solid var(--app-border)', margin: '10px' }}
       >
         {categories.map(cat => {
           const catScene = sceneConfig[cat];
@@ -248,7 +277,7 @@ export function HomeScreen() {
               }}
             >
               <span className="flex items-center gap-2">
-                {catScene.label}
+                {cat === 'recursion' ? t('tab.recursion') : cat === 'sorting' ? t('tab.sorting') : t('tab.myFunctions')}
                 {cat === 'my-functions' && customFunctions.length > 0 && (
                   <span
                     className="text-[10px] rounded-full px-1.5 py-0.5 font-bold"
@@ -351,7 +380,7 @@ export function HomeScreen() {
                               className="text-[10px] px-2 py-0.5 rounded-md font-semibold uppercase tracking-wider shrink-0"
                               style={{ backgroundColor: `${diff.border}12`, color: diff.text, border: `1px solid ${diff.border}25` }}
                             >
-                              {diff.label}
+                              {t(`difficulty.${alg.difficulty}` as 'difficulty.easy' | 'difficulty.medium' | 'difficulty.hard')}
                             </span>
                           )}
                         </div>
@@ -417,7 +446,7 @@ export function HomeScreen() {
                           </>
                         )}
                         <span className="text-xs font-medium transition-colors" style={{ color: isSelected ? scene.accent : 'var(--app-secondary)' }}>
-                          {isSelected ? '✓ Selected' : 'Select →'}
+                          {isSelected ? t('card.selected') : t('card.select')}
                         </span>
                       </div>
                     </div>
@@ -459,9 +488,9 @@ export function HomeScreen() {
                   ➕
                 </motion.span>
                 <span className="text-sm font-semibold" style={{ color: 'var(--app-text)', opacity: 0.7 }}>
-                  Add Your Function
+                  {t('card.addFn')}
                 </span>
-                <span className="text-xs" style={{ color: 'var(--app-secondary)' }}>Paste C# code</span>
+                <span className="text-xs" style={{ color: 'var(--app-secondary)' }}>{t('card.addFnSub')}</span>
               </div>
             </motion.button>
           )}
@@ -474,7 +503,7 @@ export function HomeScreen() {
               animate={{ opacity: 1 }}
               className="col-span-full text-center py-12"
             >
-              <p className="text-sm" style={{ color: 'var(--app-secondary)' }}>No custom functions yet. Click ➕ to add your first one!</p>
+              <p className="text-sm" style={{ color: 'var(--app-secondary)' }}>{t('card.emptyFns')}</p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -500,7 +529,7 @@ export function HomeScreen() {
               }}
               title="Download all functions as JSON"
             >
-              <span>📥</span> Export Functions
+              <span>📥</span> {t('fn.export')}
             </button>
           )}
           <button
@@ -514,7 +543,7 @@ export function HomeScreen() {
             }}
             title="Load functions from a JSON file"
           >
-            <span>📤</span> Import Functions
+            <span>📤</span> {t('fn.import')}
           </button>
           <input
             ref={fileInputRef}
@@ -583,7 +612,7 @@ export function HomeScreen() {
                   </span>
                   <div>
                     <h3 className="text-lg font-semibold" style={{ color: 'var(--app-text)' }}>
-                      Configure {selected.displayName}
+                      {t('config.title')} {selected.displayName}
                     </h3>
                     <p className="font-mono text-sm" style={{ color: scene.accent, opacity: 0.7 }}>{selected.csharpSignature}</p>
                   </div>
@@ -597,7 +626,7 @@ export function HomeScreen() {
                         {param.min !== undefined && (
                           <span style={{ color: 'var(--app-secondary)', opacity: 0.5 }} className="ml-1">({param.min}–{param.max})</span>
                         )}
-                        {param.isArray && <span style={{ color: 'var(--app-secondary)', opacity: 0.5 }} className="ml-1">(comma-separated)</span>}
+                        {param.isArray && <span style={{ color: 'var(--app-secondary)', opacity: 0.5 }} className="ml-1">{t('config.arrayHint')}</span>}
                       </label>
                       <input
                         type={param.isArray ? 'text' : (param.type === 'int' || param.type === 'double') ? 'number' : 'text'}
@@ -626,7 +655,7 @@ export function HomeScreen() {
                     boxShadow: `0 2px 12px ${scene.accent}20`,
                   }}
                 >
-                  ▶ Run Visualization
+                  {t('config.run')}
                 </motion.button>
               </div>
             </div>
@@ -642,7 +671,7 @@ export function HomeScreen() {
         className="mt-16 mb-8 flex items-center gap-2 text-sm relative z-10"
         style={{ color: 'var(--app-secondary)', opacity: 0.4 }}
       >
-        <span>⌨️ Pick an algorithm to begin your quest</span>
+        <span>{t('home.hint')}</span>
       </motion.div>
 
       {/* Add/Edit Function Dialog */}

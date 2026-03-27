@@ -1,10 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
 import { AppProvider } from './store/AppContext';
+import { LangProvider } from './store/LangContext';
 import { HomeScreen } from './ui/screens/HomeScreen';
 import { VisualizationScreen } from './ui/screens/VisualizationScreen';
 
 export function App() {
   return (
+    <LangProvider>
     <AppProvider>
       <BrowserRouter>
         <Routes>
@@ -14,6 +16,7 @@ export function App() {
         </Routes>
       </BrowserRouter>
     </AppProvider>
+    </LangProvider>
   );
 }
 

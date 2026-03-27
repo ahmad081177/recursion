@@ -4,6 +4,7 @@ import type { TraceStep } from '../../engine/types';
 import { useMemo, useRef, useEffect, useCallback } from 'react';
 import { useScreenshot } from '../hooks/useScreenshot';
 import { ScreenshotButton } from './ScreenshotButton';
+import { useLang } from '../../store/LangContext';
 
 // ---------- Tree data structures ----------
 
@@ -164,6 +165,7 @@ function bezierMid(p0: number, cp: number, p1: number): number {
 
 export function RecursionTreePanel() {
   const { state } = useVisualization();
+  const { t } = useLang();
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { targetRef: screenshotRef, capture, isCapturing, justCaptured } = useScreenshot({
@@ -209,7 +211,7 @@ export function RecursionTreePanel() {
       <div className="h-full flex items-center justify-center text-secondary">
         <div className="text-center">
           <p className="text-3xl mb-2">🌳</p>
-          <p className="text-sm font-semibold">Recursion Tree</p>
+          <p className="text-sm font-semibold">{t('tree.title')}</p>
           <p className="text-xs mt-1">Step through to see the tree grow</p>
         </div>
       </div>
@@ -222,7 +224,7 @@ export function RecursionTreePanel() {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between mb-2 flex-shrink-0">
-        <h2 className="text-sm font-semibold text-secondary uppercase tracking-wider">Recursion Tree</h2>
+        <h2 className="text-sm font-semibold text-secondary uppercase tracking-wider">{t('tree.title')}</h2>
         <div className="flex items-center gap-2">
           <ScreenshotButton onClick={capture} isCapturing={isCapturing} justCaptured={justCaptured} />
           <span className="text-xs px-2 py-1 rounded-full bg-surface border border-subtle text-secondary">

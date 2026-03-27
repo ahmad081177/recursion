@@ -3,6 +3,7 @@ import { useVisualization } from '../../store/VisualizationContext';
 import type { TraceStep } from '../../engine/types';
 import { useScreenshot } from '../hooks/useScreenshot';
 import { ScreenshotButton } from './ScreenshotButton';
+import { useLang } from '../../store/LangContext';
 
 interface FrameData {
   callId: string;
@@ -67,6 +68,7 @@ function buildActiveFrames(trace: TraceStep[], stepIndex: number): FrameData[] {
 
 export function CallStackPanel() {
   const { state } = useVisualization();
+  const { t } = useLang();
   const activeFrames = buildActiveFrames(state.trace, state.stepIndex);
   const { targetRef, capture, isCapturing, justCaptured } = useScreenshot({
     filename: `callstack-${state.algorithm.id}-step${state.stepIndex}`,
@@ -75,11 +77,11 @@ export function CallStackPanel() {
   return (
     <div className="flex flex-col gap-3 min-h-[300px]">
       <div className="flex items-center justify-between mb-1">
-        <h2 className="text-sm font-semibold text-secondary uppercase tracking-wider">Call Stack</h2>
+        <h2 className="text-sm font-semibold text-secondary uppercase tracking-wider">{t('callstack.title')}</h2>
         <div className="flex items-center gap-2.5">
           <ScreenshotButton onClick={capture} isCapturing={isCapturing} justCaptured={justCaptured} />
           <span className="text-xs px-2.5 py-1 rounded-full bg-elevated border border-subtle/50 text-secondary font-mono">
-            Depth: {activeFrames.length}
+            {t('callstack.depth')} {activeFrames.length}
           </span>
         </div>
       </div>
@@ -88,7 +90,7 @@ export function CallStackPanel() {
 
       {activeFrames.length === 0 && (
         <div className="flex-1 flex items-center justify-center text-secondary text-sm italic">
-          Stack is empty — click Run to start
+          {t('callstack.empty')}
         </div>
       )}
 
@@ -131,7 +133,7 @@ export function CallStackPanel() {
                 ))}
               </div>
               <div className="mt-3 pt-3 border-t border-subtle/40">
-                <span className="font-mono text-xs text-secondary">return: </span>
+                <span className="font-mono text-xs text-secondary">{t('callstack.return')} </span>
                 {frame.returnValue !== undefined ? (
                   <motion.span
                     initial={{ opacity: 0, scale: 0.8 }}

@@ -1,6 +1,7 @@
 import { useVisualization } from '../../store/VisualizationContext';
 import type { Speed } from '../../engine/types';
 import { useEffect, useRef } from 'react';
+import { useLang } from '../../store/LangContext';
 
 const SPEEDS: Speed[] = [0.25, 0.5, 1, 2, 4];
 const BASE_STEP_MS = 700;
@@ -11,6 +12,7 @@ interface ControlBarProps {
 
 export function ControlBar({ onCopyLink }: ControlBarProps) {
   const { state, dispatch } = useVisualization();
+  const { t } = useLang();
   const { stepIndex, trace, isPlaying, speed } = state;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -68,14 +70,14 @@ export function ControlBar({ onCopyLink }: ControlBarProps) {
           />
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-[11px] text-secondary font-mono">Step {stepIndex + 1} / {trace.length}</span>
+          <span className="text-[11px] text-secondary font-mono">{t('ctrl.stepOf', { n: stepIndex + 1, total: trace.length })}</span>
           <div className="flex items-center gap-1.5">
             {onCopyLink && (
               <button
                 onClick={onCopyLink}
                 className="text-[11px] text-secondary hover:text-primary transition-colors px-1.5 py-0.5 rounded-lg hover:bg-elevated"
-                aria-label="Copy link to this step"
-                title="Copy link"
+                aria-label={t('ctrl.copyLink')}
+                title={t('ctrl.copyLink')}
               >
                 🔗
               </button>
@@ -84,7 +86,7 @@ export function ControlBar({ onCopyLink }: ControlBarProps) {
               value={speed}
               onChange={e => dispatch({ type: 'SET_SPEED', speed: parseFloat(e.target.value) as Speed })}
               className="text-[11px] bg-elevated border border-subtle/60 rounded-lg px-1.5 py-0.5 text-primary cursor-pointer focus:outline-none focus:border-blue-500/50"
-              aria-label="Animation speed"
+              aria-label={t('ctrl.speed')}
             >
               {SPEEDS.map(s => (
                 <option key={s} value={s}>{s}×</option>
@@ -100,8 +102,8 @@ export function ControlBar({ onCopyLink }: ControlBarProps) {
         <button
           onClick={() => dispatch({ type: 'RESET' })}
           className="w-8 h-8 rounded-full bg-elevated text-secondary flex items-center justify-center hover:bg-subtle hover:text-primary transition-all text-sm"
-          aria-label="Reset to beginning"
-          title="Reset (R)"
+          aria-label={t('ctrl.reset')}
+          title={`${t('ctrl.reset')} (R)`}
         >
           ⏮
         </button>
@@ -111,8 +113,8 @@ export function ControlBar({ onCopyLink }: ControlBarProps) {
           onClick={() => dispatch({ type: 'BACK' })}
           disabled={atStart}
           className="w-9 h-9 rounded-full bg-elevated text-primary flex items-center justify-center disabled:opacity-25 hover:bg-subtle transition-all text-sm"
-          aria-label="Previous step"
-          title="Previous step (←)"
+          aria-label={t('ctrl.prev')}
+          title={`${t('ctrl.prev')} (←)`}
         >
           ◀
         </button>
@@ -122,7 +124,7 @@ export function ControlBar({ onCopyLink }: ControlBarProps) {
           onClick={() => dispatch({ type: isPlaying ? 'PAUSE' : 'PLAY' })}
           disabled={atEnd}
           className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-blue-500 text-white flex items-center justify-center disabled:opacity-30 hover:from-blue-500 hover:to-blue-400 transition-all shadow-md shadow-blue-600/30 text-base"
-          aria-label={isPlaying ? 'Pause' : 'Play'}
+          aria-label={isPlaying ? t('ctrl.pause') : t('ctrl.play')}
           title="Play / Pause (Space)"
         >
           {isPlaying ? '⏸' : '▶'}
@@ -133,8 +135,8 @@ export function ControlBar({ onCopyLink }: ControlBarProps) {
           onClick={() => dispatch({ type: 'NEXT' })}
           disabled={atEnd}
           className="w-9 h-9 rounded-full bg-elevated text-primary flex items-center justify-center disabled:opacity-25 hover:bg-subtle transition-all text-sm"
-          aria-label="Next step"
-          title="Next step (→)"
+          aria-label={t('ctrl.next')}
+          title={`${t('ctrl.next')} (→)`}
         >
           ▶▶
         </button>
@@ -144,8 +146,8 @@ export function ControlBar({ onCopyLink }: ControlBarProps) {
           onClick={() => dispatch({ type: 'JUMP_TO_STEP', index: trace.length - 1 })}
           disabled={atEnd}
           className="w-8 h-8 rounded-full bg-elevated text-secondary flex items-center justify-center disabled:opacity-25 hover:bg-subtle hover:text-primary transition-all text-sm"
-          aria-label="Skip to end"
-          title="Skip to end"
+          aria-label={t('ctrl.skipEnd')}
+          title={t('ctrl.skipEnd')}
         >
           ⏭
         </button>

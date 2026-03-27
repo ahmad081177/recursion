@@ -2,9 +2,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useVisualization } from '../../store/VisualizationContext';
 import { generateNarration, generateExpandedNarration } from '../../engine/narration';
 import { useState } from 'react';
+import { useLang } from '../../store/LangContext';
 
 export function NarrationPanel() {
   const { state } = useVisualization();
+  const { t } = useLang();
   const [expanded, setExpanded] = useState(true);
   const currentStep = state.trace[state.stepIndex];
 
@@ -41,7 +43,7 @@ export function NarrationPanel() {
             </span>
             <span className="w-1 h-1 rounded-full bg-secondary/40" />
             <span className="text-xs text-secondary">
-              step {state.stepIndex + 1} / {state.trace.length}
+              {t('narr.step', { n: state.stepIndex + 1, total: state.trace.length })}
             </span>
           </div>
           <AnimatePresence mode="wait">
@@ -83,9 +85,9 @@ export function NarrationPanel() {
         <button
           onClick={() => setExpanded(!expanded)}
           className="text-xs text-secondary hover:text-blue-400 transition-colors flex-shrink-0 font-medium px-2 py-1 rounded-lg hover:bg-blue-500/10"
-          aria-label={expanded ? 'Hide insight' : 'Show insight'}
+          aria-label={expanded ? t('narr.hideInsight') : t('narr.showInsight')}
         >
-          {expanded ? '💡 Less ▲' : '💡 More ▼'}
+          {expanded ? t('narr.less') : t('narr.more')}
         </button>
       </div>
     </div>

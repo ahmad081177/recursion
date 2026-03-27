@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
 import { useVisualization } from '../../store/VisualizationContext';
 import type { TraceStep, CallStep, ReturnStep, BaseCaseStep } from '../../engine/types';
+import { useLang } from '../../store/LangContext';
 
 // ── Formula definitions ──────────────────────────────────────
 
@@ -150,6 +151,7 @@ function buildPowerChain(trace: TraceStep[], stepIndex: number): string {
 
 export function AlgorithmInsight() {
   const { state } = useVisualization();
+  const { t } = useLang();
   const [collapsed, setCollapsed] = useState(false);
   const algId = state.algorithm.id;
   const info = formulas[algId];
@@ -190,10 +192,10 @@ export function AlgorithmInsight() {
       >
         <div className="flex items-center gap-2">
           <span className="text-base">{isRecursion ? '📐' : '📊'}</span>
-          <span className="text-xs font-semibold text-secondary uppercase tracking-wider">Algorithm Insight</span>
+          <span className="text-xs font-semibold text-secondary uppercase tracking-wider">{t('insight.title')}</span>
         </div>
         <span className="text-xs text-secondary hover:text-primary transition-colors">
-          {collapsed ? 'Show ▼' : 'Hide ▲'}
+          {collapsed ? t('insight.show') : t('insight.hide')}
         </span>
       </button>
 
@@ -256,13 +258,13 @@ export function AlgorithmInsight() {
                 >
                   <span className="text-base">⚠️</span>
                   <span>
-                    <strong>{totalDuplicateCalls} redundant call{totalDuplicateCalls > 1 ? 's' : ''}</strong> detected!{' '}
+                    <strong>{totalDuplicateCalls} {totalDuplicateCalls > 1 ? t('insight.redundantPlural') : t('insight.redundant')}</strong> {t('insight.detected')}{' '}
                     {Array.from(fibData.duplicates.entries())
                       .slice(0, 3)
                       .map(([n, c]) => `F(${n}) called ${c}×`)
                       .join(', ')}
                     {fibData.duplicates.size > 3 ? '…' : ''}.
-                    With <span className="text-yellow-400 font-semibold">memoization</span>, each value is computed only once!
+                    With <span className="text-yellow-400 font-semibold">{t('insight.memo')}</span>{t('insight.memoSuffix')}
                   </span>
                 </motion.div>
               )}

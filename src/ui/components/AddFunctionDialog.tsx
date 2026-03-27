@@ -5,6 +5,7 @@ import { generateCustomTrace } from '../../engine/custom-trace';
 import { useApp } from '../../store/AppContext';
 import type { CustomFunctionEntry } from '../../store/AppContext';
 import type { ParsedFunction } from '../../engine/csharp-parser';
+import { useLang } from '../../store/LangContext';
 
 const PLACEHOLDER_CODE = `int Factorial(int n)
 {
@@ -20,6 +21,7 @@ interface Props {
 
 export function AddFunctionDialog({ open, onClose, editEntry }: Props) {
   const { addCustomFunction, updateCustomFunction } = useApp();
+  const { t } = useLang();
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [testResult, setTestResult] = useState<string | null>(null);
@@ -146,8 +148,8 @@ export function AddFunctionDialog({ open, onClose, editEntry }: Props) {
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">{isEditing ? '✏️' : '✨'}</span>
                   <div>
-                    <h2 className="text-lg font-bold text-primary">{isEditing ? 'Edit Your Function' : 'Add Your Function'}</h2>
-                    <p className="text-xs text-secondary mt-0.5">{isEditing ? 'Modify the code and save your changes' : 'Paste a C# recursive function and we\'ll visualize it'}</p>
+                    <h2 className="text-lg font-bold text-primary">{isEditing ? t('dialog.editTitle') : t('dialog.addTitle')}</h2>
+                    <p className="text-xs text-secondary mt-0.5">{isEditing ? t('dialog.editSub') : t('dialog.addSub')}</p>
                   </div>
                 </div>
                 <button
@@ -164,7 +166,7 @@ export function AddFunctionDialog({ open, onClose, editEntry }: Props) {
               {/* Code editor */}
               <div>
                 <label className="block text-sm text-secondary mb-2 font-medium">
-                  C# Recursive Function
+                  {t('dialog.label')}
                 </label>
                 <textarea
                   value={code}
@@ -178,12 +180,12 @@ export function AddFunctionDialog({ open, onClose, editEntry }: Props) {
 
               {/* Supported patterns hint */}
               <div className="text-xs text-secondary/60 space-y-1">
-                <p className="font-medium text-secondary/80">Supported patterns:</p>
+                <p className="font-medium text-secondary/80">{t('dialog.patterns')}</p>
                 <ul className="list-disc list-inside space-y-0.5 pl-1">
-                  <li><code className="text-blue-400/70">int</code> return type with <code className="text-blue-400/70">int</code> parameters</li>
-                  <li><code className="text-yellow-400/70">if (...)</code> base case with <code className="text-yellow-400/70">return</code></li>
-                  <li>Single or double recursive calls (like Fibonacci)</li>
-                  <li>Arithmetic: <code className="text-purple-400/70">+ - * / %</code>, comparisons, ternary</li>
+                  <li><code className="text-blue-400/70">int</code> {t('dialog.p1')}</li>
+                  <li><code className="text-yellow-400/70">if (...)</code> {t('dialog.p2')}</li>
+                  <li>{t('dialog.p3')}</li>
+                  <li>{t('dialog.p4')}</li>
                 </ul>
               </div>
 

@@ -13,11 +13,20 @@ import { CodePanel } from '../components/CodePanel';
 import { AlgorithmInsight } from '../components/AlgorithmInsight';
 import { useApp } from '../../store/AppContext';
 import { useEffect } from 'react';
+import { useLang } from '../../store/LangContext';
+import type { Lang } from '../../store/LangContext';
+
+const LANG_OPTIONS: { value: Lang; label: string }[] = [
+  { value: 'en', label: 'EN' },
+  { value: 'ar', label: 'عر' },
+  { value: 'he', label: 'עב' },
+];
 
 function VisualizationContent() {
   const { state, dispatch } = useVisualization();
   const { unlockAchievement, recentAchievement, clearRecentAchievement } = useApp();
   const navigate = useNavigate();
+  const { lang, setLang, t } = useLang();
 
   // Achievement detection
   useEffect(() => {
@@ -57,12 +66,30 @@ function VisualizationContent() {
           className="text-secondary hover:text-primary text-sm font-medium transition-colors flex items-center gap-1.5"
           aria-label="Back to home"
         >
-          <span className="text-lg">←</span> Home
+          <span className="text-lg">←</span> {t('nav.home')}
         </button>
         <div className="text-center">
           <span className="font-mono text-sm font-semibold text-primary">{state.algorithm.csharpSignature}</span>
         </div>
         <div className="flex items-center gap-2">
+            {/* Language toggle */}
+            <div className="flex gap-1">
+              {LANG_OPTIONS.map(opt => (
+                <button
+                  key={opt.value}
+                  onClick={() => setLang(opt.value)}
+                  className="h-8 px-2.5 rounded-lg text-xs font-semibold transition-all"
+                  style={{
+                    backgroundColor: lang === opt.value ? '#7c3aed' : 'var(--elevated, #1e1e2e)',
+                    color: lang === opt.value ? '#fff' : 'var(--secondary)',
+                    border: `1px solid ${lang === opt.value ? '#7c3aed' : 'rgba(255,255,255,0.08)'}`,
+                  }}
+                  aria-pressed={lang === opt.value}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
           <button
             onClick={() => dispatch({ type: 'SET_MODE', mode: isInQuizMode ? 'learn' : 'quiz' })}
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
@@ -72,7 +99,7 @@ function VisualizationContent() {
             }`}
             aria-label={isInQuizMode ? 'Exit quiz mode' : 'Enter quiz mode'}
           >
-            {isInQuizMode ? '📖 Learn Mode' : '🎯 Quiz Mode'}
+            {isInQuizMode ? t('nav.learnMode') : t('nav.quizMode')}
           </button>
         </div>
       </header>
@@ -80,7 +107,7 @@ function VisualizationContent() {
       {/* Error banner for custom function trace failures */}
       {traceError && (
         <div className="mx-5 mt-3 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm font-mono">
-          <span className="font-semibold">⚠️ Trace error:</span> {traceError}
+          <span className="font-semibold">{t('viz.traceError')}</span> {traceError}
         </div>
       )}
 
