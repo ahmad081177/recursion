@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RecursiQuest - Teacher Guide</title>
+  <style>
+:root {
+  --bg: #f5f2ea;
+  --surface: #fffdf8;
+  --ink: #1f1f1f;
+  --line: #dfd7c8;
+  --accent: #0f766e;
+  --accent-soft: #dff4f2;
+  --code-bg: #f3efe5;
+  --table-head: #f0e6d2;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: "Segoe UI", "Noto Sans", Tahoma, Arial, sans-serif;
+  background:
+    radial-gradient(circle at 12% 0%, #f8e7c2 0%, transparent 35%),
+    radial-gradient(circle at 88% 0%, #d6efe9 0%, transparent 40%),
+    var(--bg);
+  color: var(--ink);
+  line-height: 1.75;
+}
+main {
+  max-width: 980px;
+  margin: 2rem auto 3rem;
+  padding: 2rem clamp(1rem, 2.8vw, 2.25rem);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+}
+h1, h2, h3, h4 { line-height: 1.3; margin-top: 1.6em; margin-bottom: 0.6em; }
+h1 { margin-top: 0.25em; padding-bottom: 0.6rem; border-bottom: 3px solid var(--accent-soft); }
+h2 { border-inline-start: 5px solid var(--accent); padding-inline-start: 0.7rem; }
+a { color: #0d5c56; text-underline-offset: 2px; }
+a:hover { color: #094944; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+blockquote {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border-inline-start: 4px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 8px;
+}
+code {
+  font-family: Consolas, "Cascadia Code", monospace;
+  background: var(--code-bg);
+  border: 1px solid #e7ddcb;
+  padding: 0.08rem 0.35rem;
+  border-radius: 5px;
+}
+pre {
+  overflow-x: auto;
+  padding: 1rem;
+  background: #24292e;
+  color: #f7f7f7;
+  border-radius: 10px;
+}
+pre code { background: transparent; border: 0; color: inherit; padding: 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem;
+  font-size: 0.97rem;
+}
+th, td {
+  border: 1px solid var(--line);
+  padding: 0.62rem 0.7rem;
+  vertical-align: top;
+}
+th { background: var(--table-head); font-weight: 700; }
+ul, ol { padding-inline-start: 1.25rem; }
+li { margin-bottom: 0.32rem; }
+@media (max-width: 768px) {
+  body { font-size: 15px; }
+  main { margin: 1rem 0.7rem 1.3rem; padding: 1rem; border-radius: 12px; }
+  table { font-size: 0.92rem; display: block; overflow-x: auto; white-space: nowrap; }
+}
+  </style>
+</head>
+<body>
+  <main>
+<h1>RecursiQuest — Teacher Guide</h1>
+<blockquote>
+<p><strong>What is it?</strong>
+RecursiQuest is an interactive, step-by-step algorithm visualizer designed to help students <em>see</em> and <em>understand</em> how recursion and sorting algorithms work — one step at a time, with animated visuals, plain-language explanations, and a built-in quiz.</p>
+</blockquote>
+<hr>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#1-overview">Overview</a></li>
+<li><a href="#2-getting-around----the-two-screens">Getting Around — The Two Screens</a></li>
+<li><a href="#3-algorithm-categories">Algorithm Categories</a><ul>
+<li><a href="#recursion">Recursion</a></li>
+<li><a href="#sorting">Sorting</a></li>
+<li><a href="#my-functions">My Functions</a></li>
+</ul>
+</li>
+<li><a href="#4-the-visualization-panels">The Visualization Panels</a><ul>
+<li><a href="#call-stack-panel">Call Stack</a></li>
+<li><a href="#recursion-tree-panel">Recursion Tree</a></li>
+<li><a href="#code-snippet-panel">Code Snippet</a></li>
+<li><a href="#call-explanation--narration-panel">Call Explanation (Narration)</a></li>
+<li><a href="#array-visualizer-sorting-only">Array Visualizer</a></li>
+<li><a href="#algorithm-insight-panel">Algorithm Insight</a></li>
+</ul>
+</li>
+<li><a href="#5-playback-controls">Playback Controls</a></li>
+<li><a href="#6-learn-mode-vs-quiz-mode">Learn Mode vs Quiz Mode</a></li>
+<li><a href="#7-achievements--levels">Achievements &amp; Levels</a></li>
+<li><a href="#8-adding-your-own-function">Adding Your Own Function</a></li>
+<li><a href="#9-import--export-functions">Import &amp; Export Functions</a></li>
+<li><a href="#10-language-support">Language Support</a></li>
+<li><a href="#11-screenshot-feature">Screenshot Feature</a></li>
+<li><a href="#12-sharing-a-specific-step">Sharing a Specific Step</a></li>
+<li><a href="#13-keyboard-shortcuts">Keyboard Shortcuts</a></li>
+<li><a href="#14-quick-start-checklist-for-teachers">Quick-Start Checklist for Teachers</a></li>
+</ol>
+<hr>
+<h2>1. Overview</h2>
+<p>RecursiQuest turns an abstract concept — &quot;the function calls itself!&quot; — into something students can actually see. When a student runs an algorithm, the app records every single function call and return, then lets them walk through it at any speed using animated panels.</p>
+<p><strong>Who it is for:</strong> students learning recursion and sorting for the first time, typically in an introductory programming or data structures course.</p>
+<p><strong>Language used in code examples:</strong> C# — clean, readable, familiar to students learning object-oriented programming.</p>
+<hr>
+<h2>2. Getting Around — The Two Screens</h2>
+<h3>Home Screen</h3>
+<p>This is where students start. It shows three tabs: <strong>Recursion</strong>, <strong>Sorting</strong>, and <strong>My Functions</strong>.</p>
+<ul>
+<li>Each tab lists available algorithms as cards.</li>
+<li>Each card shows the algorithm name, a short description, and its difficulty level (🟢 Easy / 🟡 Medium / 🔴 Hard).</li>
+<li>Students select an algorithm and set the input (e.g., &quot;n = 5&quot;), then click <strong>▶ Run Visualization</strong>.</li>
+<li>The language switcher (EN / عر / עב) is available at the top right of both screens.</li>
+</ul>
+<h3>Visualization Screen</h3>
+<p>After clicking Run, the student lands on the Visualization Screen. This is where all the learning panels live. The screen is divided into resizable columns — students can drag the dividers to make any panel larger or smaller.</p>
+<hr>
+<h2>3. Algorithm Categories</h2>
+<h3>Recursion</h3>
+<p>Five classic recursive algorithms, each increasing in conceptual depth:</p>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Description</th>
+<th>Difficulty</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Factorial</strong></td>
+<td>Computes n! = n × (n−1) × … × 1. The simplest linear recursion.</td>
+<td>🟢 Easy</td>
+</tr>
+<tr>
+<td><strong>Power</strong></td>
+<td>Raises a base to an exponent using recursion: <code>Power(base, exp)</code></td>
+<td>🟢 Easy</td>
+</tr>
+<tr>
+<td><strong>Fibonacci</strong></td>
+<td>Computes F(n) using two recursive calls — introduces branching recursion and the concept of repeated computation.</td>
+<td>🟡 Medium</td>
+</tr>
+<tr>
+<td><strong>Sum Array</strong></td>
+<td>Sums all elements of an integer array recursively.</td>
+<td>🟡 Medium</td>
+</tr>
+<tr>
+<td><strong>Max Item</strong></td>
+<td>Finds the largest element in an integer array recursively.</td>
+<td>🟡 Medium</td>
+</tr>
+</tbody></table>
+<p><strong>Suggested progression:</strong> Start with Factorial, move to Power, then Fibonacci (a great discussion starter about why it calls itself twice), then the array variants.</p>
+<hr>
+<h3>Sorting</h3>
+<p>Three sorting algorithms that collectively illustrate different strategies:</p>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Description</th>
+<th>Difficulty</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Bubble Sort</strong></td>
+<td>Repeatedly compares neighboring elements and swaps them if out of order. Easy to see &quot;bubbling&quot; the largest element to the end.</td>
+<td>🟢 Easy</td>
+</tr>
+<tr>
+<td><strong>Selection Sort</strong></td>
+<td>Finds the minimum element repeatedly and places it at the front. Clear in-place strategy.</td>
+<td>🟡 Medium</td>
+</tr>
+<tr>
+<td><strong>Insertion Sort</strong></td>
+<td>Builds the sorted portion one element at a time, inserting each new element into its correct position.</td>
+<td>🟡 Medium</td>
+</tr>
+</tbody></table>
+<p>For sorting algorithms the Recursion Tree is replaced by a live <strong>Array Visualizer</strong> — color-coded tiles animate to show which elements are being compared and swapped.</p>
+<hr>
+<h3>My Functions</h3>
+<p>Students (or teachers) can write and visualize their <strong>own</strong> recursive C# functions. See <a href="#8-adding-your-own-function">Section 8</a> for full details.</p>
+<hr>
+<h2>4. The Visualization Panels</h2>
+<p>When running any algorithm, up to five panels appear on screen. They all stay synchronized — advancing one step updates every panel at once.</p>
+<hr>
+<h3>Call Stack Panel</h3>
+<p><strong>What it shows:</strong> The <em>live</em> state of the call stack — exactly which function calls are currently open (not yet returned), stacked from bottom (first call) to top (most recent call).</p>
+<p><strong>How to read it:</strong></p>
+<ul>
+<li>Each frame shows the function name and its current parameter values (e.g., <code>Factorial(n=3)</code>).</li>
+<li>Frames are color-coded by depth — the first call is blue, the next is teal, then green, yellow, orange, and red for deeper levels.</li>
+<li>When a function returns, its frame disappears from the stack with a smooth animation.</li>
+<li>If a frame shows a <strong>BASE CASE</strong> label, the student is witnessing the stop condition of the recursion.</li>
+</ul>
+<p><strong>Teaching use:</strong> Ask students &quot;how many frames are on the stack right now?&quot; to build intuition about call depth and stack memory.</p>
+<hr>
+<h3>Recursion Tree Panel</h3>
+<p><strong>What it shows:</strong> A growing tree diagram of all function calls made so far, arranged so that every node&#39;s children are the recursive calls it made.</p>
+<p><strong>How to read it:</strong></p>
+<ul>
+<li>Each circle (node) represents one function call with its input values.</li>
+<li>Lines between nodes show &quot;this call triggered that child call.&quot;</li>
+<li>Nodes light up with their return value once the function returns.</li>
+<li>Base-case nodes are highlighted differently to clearly mark where the recursion stopped.</li>
+</ul>
+<p><strong>Teaching use:</strong> For Fibonacci, the tree clearly shows the <em>same sub-problem being computed multiple times</em> — a powerful visual for motivating memoization later in the course. For Factorial and Power, the tree is a straight line, reinforcing &quot;linear recursion.&quot;</p>
+<hr>
+<h3>Code Snippet Panel</h3>
+<p><strong>What it shows:</strong> The full C# source code of the selected algorithm, with <strong>live line highlighting</strong> — the exact line being executed at the current step is highlighted in blue with a left border marker.</p>
+<p><strong>How to use it:</strong></p>
+<ul>
+<li>The panel can be collapsed/expanded by clicking its header.</li>
+<li>Syntax highlighting colors keywords (purple), numbers (orange), strings (green), and comments (grey).</li>
+<li>As students step through the algorithm, the highlight moves within the code, connecting what they see in the tree to the actual code line.</li>
+</ul>
+<p><strong>Teaching use:</strong> Great for &quot;I see the call on the tree — now which line of code produced it?&quot; pair activities.</p>
+<hr>
+<h3>Call Explanation / Narration Panel</h3>
+<p><strong>What it shows:</strong> A plain-language sentence explaining what is happening at the current step. Every step type has its own style of explanation:</p>
+<table>
+<thead>
+<tr>
+<th>Step Type</th>
+<th>Example Narration</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>CALL</strong></td>
+<td><em>&quot;Calling Factorial(n=3) at depth 1. It will call Factorial(n=2) next.&quot;</em></td>
+</tr>
+<tr>
+<td><strong>BASE CASE</strong></td>
+<td><em>&quot;Base case reached! Factorial(n=1) returns 1 immediately — this is where the recursion stops.&quot;</em></td>
+</tr>
+<tr>
+<td><strong>RETURN</strong></td>
+<td><em>&quot;Factorial(n=3) returns 6 (= 3 × 2).&quot;</em></td>
+</tr>
+<tr>
+<td><strong>COMPARE</strong></td>
+<td><em>&quot;Comparing positions 2 and 3: value 8 &gt; value 1, so a swap will happen.&quot;</em></td>
+</tr>
+<tr>
+<td><strong>SWAP</strong></td>
+<td><em>&quot;Swapping positions 2 and 3. Array is now [5, 3, 1, ...].&quot;</em></td>
+</tr>
+</tbody></table>
+<p>A <strong>&quot;More ▼&quot;</strong> button expands the narration to show a deeper explanation of <em>why</em> this step happens.</p>
+<p><strong>Teaching use:</strong> Students can read the explanation aloud in class, or use &quot;More&quot; to self-check their understanding between steps.</p>
+<hr>
+<h3>Array Visualizer (Sorting only)</h3>
+<p><strong>What it shows:</strong> The array being sorted as a row of animated tiles. Each tile displays its value and a face emoji that changes to reflect its state:</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Emoji</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Default</td>
+<td>🙂</td>
+<td>Element at rest</td>
+</tr>
+<tr>
+<td>Comparing</td>
+<td>😮</td>
+<td>Element is being compared right now</td>
+</tr>
+<tr>
+<td>Swapping</td>
+<td>😲</td>
+<td>Element is being swapped right now</td>
+</tr>
+<tr>
+<td>Sorted</td>
+<td>✅</td>
+<td>Element has reached its final position</td>
+</tr>
+</tbody></table>
+<p>A small text label below the tiles confirms the comparison result (e.g., &quot;8 &gt; 1 — will swap&quot;).</p>
+<hr>
+<h3>Algorithm Insight Panel</h3>
+<p><strong>What it shows:</strong> A collapsible side panel with:</p>
+<ul>
+<li>The <strong>mathematical formula</strong> of the algorithm (e.g., <code>F(n) = F(n-1) + F(n-2)</code>).</li>
+<li>A <strong>description</strong> of what the algorithm does conceptually.</li>
+<li>The current <strong>time complexity</strong> class (e.g., O(n), O(2ⁿ)).</li>
+<li>A live <strong>computation chain</strong> built step by step (e.g., <code>4! = 4 × 3 × 2 × 1</code>), or for Fibonacci, the sequence of computed values and a note about how many times each sub-problem was recalculated.</li>
+</ul>
+<hr>
+<h2>5. Playback Controls</h2>
+<p>The Control Bar sits at the bottom of the visualization screen and gives full control over stepping:</p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>⏮ Reset</strong></td>
+<td>Jump back to step 1</td>
+</tr>
+<tr>
+<td><strong>◀ Back</strong></td>
+<td>Go one step backward</td>
+</tr>
+<tr>
+<td><strong>▶ Play / ⏸ Pause</strong></td>
+<td>Auto-play at the chosen speed</td>
+</tr>
+<tr>
+<td><strong>▶ Next</strong></td>
+<td>Go one step forward</td>
+</tr>
+<tr>
+<td><strong>⏭ Skip to End</strong></td>
+<td>Jump to the last step instantly</td>
+</tr>
+<tr>
+<td><strong>Progress bar</strong></td>
+<td>Click anywhere on the bar to jump directly to that step</td>
+</tr>
+<tr>
+<td><strong>Speed selector</strong></td>
+<td>Choose from 0.25×, 0.5×, 1×, 2×, or 4× playback speed</td>
+</tr>
+<tr>
+<td><strong>Step counter</strong></td>
+<td>Shows &quot;Step 7 / 23&quot; so students always know where they are</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>6. Learn Mode vs Quiz Mode</h2>
+<h3>Learn Mode (default)</h3>
+<p>Students step through the algorithm freely, reading the narration and watching the panels update. No pressure — they can go forward and backward at will.</p>
+<h3>Quiz Mode</h3>
+<p>Accessible via the <strong>🎯 Quiz Mode</strong> button in the header.</p>
+<p>In Quiz Mode, before each step is revealed, students are shown a <strong>multiple-choice question</strong> asking them to predict what will happen next (e.g., &quot;What does <code>Factorial(n=2)</code> return?&quot;). After they answer:</p>
+<ul>
+<li>✅ Correct answers show a green highlight with an explanation of <em>why</em> that&#39;s correct.</li>
+<li>❌ Wrong answers show the correct choice and an explanation.</li>
+</ul>
+<p><strong>XP &amp; Combo System:</strong></p>
+<ul>
+<li>Each correct answer earns XP points.</li>
+<li>Getting 3 or more correct answers in a row shows a 🔥 combo multiplier.</li>
+<li>Reaching a combo of 5 unlocks the <strong>&quot;On Fire!&quot;</strong> achievement.</li>
+</ul>
+<p>Students can exit Quiz Mode at any time and return to Learn Mode.</p>
+<hr>
+<h2>7. Achievements &amp; Levels</h2>
+<p>Students earn <strong>achievements</strong> as they interact with the visualizer. Achievements are saved in their browser so progress persists across sessions.</p>
+<table>
+<thead>
+<tr>
+<th>Achievement</th>
+<th>How to Earn</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🛑 <strong>First Base Case!</strong></td>
+<td>Reach a BASE_CASE step in any algorithm</td>
+</tr>
+<tr>
+<td>🌀 <strong>Fibonacci Conqueror</strong></td>
+<td>Complete a full Fibonacci visualization</td>
+</tr>
+<tr>
+<td>↕️ <strong>Sort Master</strong></td>
+<td>Watch any sorting algorithm run to completion</td>
+</tr>
+<tr>
+<td>🔥 <strong>On Fire!</strong></td>
+<td>Get 5 correct quiz answers in a row</td>
+</tr>
+<tr>
+<td>💥 <strong>Survived the Overflow</strong></td>
+<td>View the stack-overflow disaster screen</td>
+</tr>
+</tbody></table>
+<p><strong>Level system:</strong> Unlocking achievements raises the student&#39;s level. The current level and level label are displayed on the home screen, giving a light sense of progression.</p>
+<p>Whenever an achievement is newly unlocked, a <strong>toast notification</strong> pops up in the corner with the achievement title and icon.</p>
+<hr>
+<h2>8. Adding Your Own Function</h2>
+<p>The <strong>My Functions</strong> tab lets anyone add a custom recursive C# function to the visualizer. This is powerful for teachers who want to demonstrate their own examples, or for students who want to experiment.</p>
+<h3>How to add a function</h3>
+<ol>
+<li>On the Home screen, click the <strong>My Functions</strong> tab.</li>
+<li>Click the <strong>➕ Add Your Function</strong> card.</li>
+<li>In the dialog that opens, paste or type a C# recursive function. The function must:<ul>
+<li>Return <code>int</code>, <code>long</code>, <code>double</code>, or <code>float</code>.</li>
+<li>Accept only simple numeric parameters (<code>int</code>, <code>long</code>, <code>double</code>, <code>float</code>).</li>
+<li>Include a base case (e.g., <code>if (n &lt;= 1) return 1;</code>).</li>
+<li>Call itself recursively.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Example:</strong></p>
+<pre><code class="language-csharp">int Power(int base, int exp)
+{
+    if (exp == 0) return 1;
+    return base * Power(base, exp - 1);
+}
+</code></pre>
+<ol start="4">
+<li>Click <strong>Test</strong> — the app will parse the function and run a quick trace. A green message confirms how many steps and calls were generated: <code>✅ Power(base=4, exp=4) — 10 steps, 5 calls, 5 returns. Ready to add!</code></li>
+<li>If there&#39;s an error, a message explains what went wrong (e.g., unsupported return type, missing base case).</li>
+<li>Click <strong>Add</strong> to save the function.</li>
+</ol>
+<h3>Managing custom functions</h3>
+<ul>
+<li>Custom functions appear as cards in the <strong>My Functions</strong> tab just like built-in algorithms.</li>
+<li>Hover over a custom function card to see <strong>Edit</strong> and <strong>Delete</strong> buttons.</li>
+<li>The function is saved in the browser&#39;s local storage and persists across page reloads.</li>
+</ul>
+<hr>
+<h2>9. Import &amp; Export Functions</h2>
+<p>Custom functions can be saved to a file and shared — useful if a teacher wants all students to have the same set of functions, or if a student wants to move their functions to a different browser or computer.</p>
+<h3>Export</h3>
+<ol>
+<li>On the Home screen, click the <strong>📥 Export Functions</strong> button (visible when at least one custom function exists).</li>
+<li>A JSON file named <code>recursiquest-functions-YYYY-MM-DD.json</code> is downloaded to the device.</li>
+</ol>
+<h3>Import</h3>
+<ol>
+<li>Click the <strong>📤 Import Functions</strong> button.</li>
+<li>Select a previously exported <code>.json</code> file.</li>
+<li>The app imports all functions from the file and merges them with any existing custom functions. Duplicate IDs are replaced with the imported version.</li>
+<li>Imported functions appear immediately in the <strong>My Functions</strong> tab.</li>
+</ol>
+<p><strong>Teaching scenario:</strong> A teacher prepares 3 custom functions, exports the file, and shares it with the class. Each student imports the file and instantly has all three functions ready to visualize.</p>
+<hr>
+<h2>10. Language Support</h2>
+<p>RecursiQuest supports three interface languages, switchable at any time with the language toggle in the top-right corner of both screens:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Language</th>
+<th>Script Direction</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>EN</strong></td>
+<td>English</td>
+<td>Left-to-right</td>
+</tr>
+<tr>
+<td><strong>عر</strong></td>
+<td>Arabic</td>
+<td>Right-to-left (RTL)</td>
+</tr>
+<tr>
+<td><strong>עב</strong></td>
+<td>Hebrew</td>
+<td>Right-to-left (RTL)</td>
+</tr>
+</tbody></table>
+<p>Switching language updates <strong>all text</strong> in the interface — tabs, buttons, narrations, quiz questions, error messages, and all panel labels — instantly, without reloading the page. The layout automatically mirrors for RTL languages.</p>
+<p>The code snippet panel always displays C# code left-to-right regardless of the selected language, as code is language-agnostic in direction.</p>
+<hr>
+<h2>11. Screenshot Feature</h2>
+<p>Each of the main panels — <strong>Call Stack</strong> and <strong>Recursion Tree</strong> — has a small 📷 <strong>screenshot button</strong> in its top-right corner. Clicking it saves a PNG image of that panel to the device&#39;s Downloads folder.</p>
+<p>The file is named automatically, e.g., <code>callstack-factorial-step7.png</code> or <code>recursiontree-fibonacci-step12.png</code>.</p>
+<p><strong>Teaching use:</strong> Students can capture a snapshot of the recursion tree at its deepest point and include it in a homework report or present it in class.</p>
+<hr>
+<h2>12. Sharing a Specific Step</h2>
+<p>The <strong>🔗 Copy Link</strong> button in the control bar copies the current page URL — with the exact step number encoded — to the clipboard. Sharing that URL takes anyone directly to the same algorithm at the same step.</p>
+<p><strong>Teaching use:</strong> A teacher can navigate to a key moment (e.g., step 8 of Fibonacci where both branches are open), copy the link, and share it with the class so everyone starts at exactly that moment.</p>
+<hr>
+<h2>13. Keyboard Shortcuts</h2>
+<p>Students who prefer keyboard navigation can use the following shortcuts in the Visualization Screen:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>→</code> (Right Arrow)</td>
+<td>Next step</td>
+</tr>
+<tr>
+<td><code>←</code> (Left Arrow)</td>
+<td>Previous step</td>
+</tr>
+<tr>
+<td><code>Space</code></td>
+<td>Play / Pause</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>Reset to beginning</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>14. Quick-Start Checklist for Teachers</h2>
+<p>Use this checklist when introducing RecursiQuest to a class:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Open the app and show the Home screen with the <strong>three tabs</strong>.</li>
+<li><input disabled="" type="checkbox"> Select <strong>Factorial</strong> (Easy), set <code>n = 4</code>, click <strong>▶ Run Visualization</strong>.</li>
+<li><input disabled="" type="checkbox"> Point out the <strong>Call Stack</strong> building up as you step forward.</li>
+<li><input disabled="" type="checkbox"> Point out the <strong>Code Snippet</strong> — watch the highlighted line move.</li>
+<li><input disabled="" type="checkbox"> Read the <strong>Narration</strong> aloud with the class for each step.</li>
+<li><input disabled="" type="checkbox"> At the base case, ask: <em>&quot;Why does the recursion stop here?&quot;</em></li>
+<li><input disabled="" type="checkbox"> Use <strong>Play</strong> at 0.5× speed for a smooth demonstration.</li>
+<li><input disabled="" type="checkbox"> Switch to <strong>Fibonacci(5)</strong> — show how the <strong>Recursion Tree</strong> branches.</li>
+<li><input disabled="" type="checkbox"> Switch to <strong>Bubble Sort</strong> — introduce the <strong>Array Visualizer</strong>.</li>
+<li><input disabled="" type="checkbox"> Switch the language to <strong>Arabic or Hebrew</strong> to show RTL support.</li>
+<li><input disabled="" type="checkbox"> Demonstrate adding a <strong>custom function</strong> using a class example.</li>
+<li><input disabled="" type="checkbox"> Enable <strong>Quiz Mode</strong> and have students predict the next step.</li>
+<li><input disabled="" type="checkbox"> Show <strong>Export</strong> and explain how students can bring their work home.</li>
+</ul>
+<hr>
+<p><em>RecursiQuest — April 2026</em></p>
+
+
+  </main>
+</body>
+</html>
