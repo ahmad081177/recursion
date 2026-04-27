@@ -8,7 +8,7 @@ export function App() {
   return (
     <LangProvider>
     <AppProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/recursion">
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="/visualize/:algorithmId" element={<VisualizationScreen />} />
